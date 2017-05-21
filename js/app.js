@@ -27,7 +27,7 @@ Enemy.prototype.update = function(dt) {
     else {
         this.x = -100;
     }
-    this.y = 60;
+    // this.y = 60;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -56,9 +56,11 @@ Player.prototype.handleInput = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-var numOfEnemies = 1;
+var numOfEnemies = 3;
 for(var i = 0; i < numOfEnemies; i++){
   allEnemies.push(new Enemy());
+allEnemies[i].y = (i + 1) * 70;
+  console.log(allEnemies[i].y);
 }
 var player = new Player();
 
