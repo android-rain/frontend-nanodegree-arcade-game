@@ -39,12 +39,19 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    var x =
+    // horizontal pixels of every box is 100
+    this.OneStepHpixel = 100;
+    var x = 100;
+    // vertical pixels of every box is 85
+    this.OneStepVPiexl = 85;
+    // initial value is 70
+    var y = 70;
     this.sprite = "images/char-boy.png";
 };
 
-Player.prototype.update = function(dt) {
-
+Player.prototype.update = function() {
+    this.x = 200;
+    this.y = 410    ;
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
