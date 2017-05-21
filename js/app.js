@@ -41,23 +41,43 @@ Enemy.prototype.render = function() {
 var Player = function() {
     // horizontal pixels of every box is 100
     this.OneStepHpixel = 100;
-    var x = 100;
+    this.x = 200;
     // vertical pixels of every box is 85
     this.OneStepVPiexl = 85;
     // initial value is 70
-    var y = 70;
+    this.y = 410;
+    // screen width
+    this.ScreenWidth = 505;
     this.sprite = "images/char-boy.png";
 };
 
 Player.prototype.update = function() {
-    this.x = 200;
-    this.y = 410    ;
+
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-Player.prototype.handleInput = function() {
-
+Player.prototype.handleInput = function(keyCode) {
+    switch(keyCode){
+        case 'left': this.x = this.x - this.OneStepHpixel; break;
+        case 'right': this.x = this.x + this.OneStepHpixel; break;
+        case 'up': this.y = this.y - this.OneStepVPiexl; break;
+        case 'down': this.y = this.y + this.OneStepVPiexl; break;
+        default: break;
+    }
+    if (this.x < 0) {
+        this.x = 0;
+    }
+    else if (this.x > 400) {
+        this.x = 400;
+    }
+    if (this.y < 0){
+        this.y = 0;
+    }
+    else if( this.y > 415){
+        this.y = 415;
+    }
+    console.log('x = '+ this.x + '; y = ' + this.y);
 };
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
