@@ -67,7 +67,7 @@ var numOfEnemies = 3;
 for(var i = 0; i < numOfEnemies; i++){
   allEnemies.push(new Enemy());
 allEnemies[i].y = (i + 1) * 70;
-  console.log(allEnemies[i].y);
+  // console.log(allEnemies[i].y);
 }
 var player = new Player();
 
