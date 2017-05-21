@@ -2,8 +2,14 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    // initial position: x, y
     var x = -100;
     var y = 0;
+
+    // screen width
+    this.ScreenWidth = 505;
+    //  factor of bug's speed
+    this.factor = 100;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -15,8 +21,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    if(this.x < 505){
-        this.x += dt*100;
+    if(this.x < this.ScreenWidth){
+        this.x += dt * this.factor;
     }
     else {
         this.x = -100;
