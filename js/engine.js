@@ -81,6 +81,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkWin();
     }
 
     /* This is called by the update function and loops through all of the
@@ -112,12 +113,22 @@ var Engine = (function(global) {
             && Math.abs(positions[i][1] - py) < 80) {
               reset();
               alert("You die");
-              console.log("you die");
+              // console.log("you die");
               break;
             }
        }
 
        positions = [];
+     }
+
+     /* This function is to detect the player could be win.
+      */
+     function checkWin(){
+        if(player.y < 83) {
+            alert("You winning");
+            console.log("you win");
+            reset();
+        }
      }
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
