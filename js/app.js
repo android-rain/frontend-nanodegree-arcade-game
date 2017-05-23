@@ -40,12 +40,12 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     // horizontal pixels of every box is 100
-    this.OneStepHpixel = 100;
-    this.x = 200;
+    this.OneStepHpixel = 101;
+    this.x = 101 * 3;
     // vertical pixels of every box is 85
-    this.OneStepVPiexl = 85;
+    this.OneStepVPiexl = 83;
     // initial value is 70
-    this.y = 410;
+    this.y = 83 * 4;
     // screen width
     this.ScreenWidth = 505;
     this.sprite = "images/char-boy.png";
@@ -87,7 +87,7 @@ var allEnemies = [];
 var numOfEnemies = 3;
 for(var i = 0; i < numOfEnemies; i++){
     allEnemies.push(new Enemy());
-    allEnemies[i].y = 70 + i * 80;
+    allEnemies[i].y =  83 + i * 83;
   // console.log(allEnemies[i].y);
 }
 var player = new Player();

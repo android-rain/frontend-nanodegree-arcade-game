@@ -182,8 +182,8 @@ var Engine = (function(global) {
      */
     function reset() {
         // Reset player's position
-        player.x = 200;
-        player.y = 410;
+        player.x = 101 * 2;
+        player.y = 83 * 4;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
