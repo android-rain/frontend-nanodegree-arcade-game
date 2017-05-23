@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -97,6 +97,28 @@ var Engine = (function(global) {
         player.update();
     }
 
+    /* This function is to detect the collisions of the enemy with player.
+     *
+     */
+     function checkCollisions() {
+       var positions = [];
+       allEnemies.forEach(function(enemy) {
+          positions.push([enemy.x, enemy.y]);
+       });
+       var px = player.x;
+       var py = player.y;
+       for(var i = 0; i < positions.length; i++) {
+         if(Math.abs(positions[i][0] - px) < 70
+            && Math.abs(positions[i][1] - py) < 80) {
+              reset();
+              alert("You die");
+              console.log("you die");
+              break;
+            }
+       }
+
+       positions = [];
+     }
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -159,7 +181,9 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        // Reset player's position
+        player.x = 200;
+        player.y = 410;
     }
 
     /* Go ahead and load all of the images we know we're going to need to

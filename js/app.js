@@ -9,7 +9,7 @@ var Enemy = function() {
     // screen width
     this.ScreenWidth = 505;
     //  factor of bug's speed
-    this.factor = 100;
+    this.factor = 30;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -77,6 +77,7 @@ Player.prototype.handleInput = function(keyCode) {
     else if( this.y > 415){
         this.y = 415;
     }
+    // test code
     console.log('x = '+ this.x + '; y = ' + this.y);
 };
 // Now instantiate your objects.
@@ -85,8 +86,8 @@ Player.prototype.handleInput = function(keyCode) {
 var allEnemies = [];
 var numOfEnemies = 3;
 for(var i = 0; i < numOfEnemies; i++){
-  allEnemies.push(new Enemy());
-allEnemies[i].y = (i + 1) * 70;
+    allEnemies.push(new Enemy());
+    allEnemies[i].y = 70 + i * 80;
   // console.log(allEnemies[i].y);
 }
 var player = new Player();
@@ -103,3 +104,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+// Handle collisions
