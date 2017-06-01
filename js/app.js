@@ -52,7 +52,8 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-
+    this.x = this.x;
+    this.y = this.y;
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -78,8 +79,12 @@ Player.prototype.handleInput = function(keyCode) {
         this.y = 415;
     }
     // test code
-    console.log('x = '+ this.x + '; y = ' + this.y);
+    // console.log('x = '+ this.x + '; y = ' + this.y);
 };
+// Player.prototype.isDied = function() {
+//     return checkCollisions()? true:false;
+// }
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -99,7 +104,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        8: 'backspace'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);

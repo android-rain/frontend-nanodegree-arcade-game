@@ -21,6 +21,7 @@ var Engine = (function(global) {
      */
     var doc = global.document,
         win = global.window,
+        rl = doc.getElementById("result"),
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
@@ -79,9 +80,14 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        checkCollisions();
-        checkWin();
+
+        if(checkCollisions() || checkPlayerWin()) {
+            checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
+            updateEntities(0);
+            setTimeout(reset, 1000);
+        } else {
+            updateEntities(dt);
+        }
     }
 
     /* This is called by the update function and loops through all of the
@@ -111,25 +117,22 @@ var Engine = (function(global) {
        for(var i = 0; i < positions.length; i++) {
          if(Math.abs(positions[i][0] - px) < 70
             && Math.abs(positions[i][1] - py) < 80) {
-              reset();
-              alert("You die");
-              // console.log("you die");
-              break;
+            return true;
             }
        }
-
-       positions = [];
+       positions = [];  // could be deleted
+       return false;
      }
 
      /* This function is to detect the player could be win.
       */
-     function checkWin(){
+     function checkPlayerWin(){
         if(player.y < 83) {
-            alert("You winning");
-            console.log("you win");
-            reset();
+            return true;
         }
+        return false;
      }
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -192,9 +195,15 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // Reset player's position
+        // Reset entities's position
+        allEnemies.forEach(function(enemy) {
+            enemy.x = -100;
+        });
+
         player.x = 101 * 2;
         player.y = 83 * 4;
+
+        rl.innerHTML = "Playing";
     }
 
     /* Go ahead and load all of the images we know we're going to need to
