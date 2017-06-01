@@ -8,7 +8,7 @@ var Enemy = function() {
 
     // screen width
     this.ScreenWidth = 505;
-    //  factor of bug's speed
+    //  inital factor of bug's speed
     this.factor = 30;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
@@ -24,8 +24,12 @@ Enemy.prototype.update = function(dt) {
     if(this.x < this.ScreenWidth){
         this.x += dt * this.factor;
     }
+    //reset the bug's position and speed after it run over out of the canvas
     else {
-        this.x = -100;
+        this.x = -101;
+        row = (Math.random() * 10 / 5).toFixed();
+        this.y =  83 + row * 83;
+        this.factor = 70 * (Math.random() * 10 + 1).toFixed();
     }
 };
 
@@ -83,10 +87,14 @@ Player.prototype.handleInput = function(keyCode) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-var numOfEnemies = 3;
+var numOfEnemies = 5;
 for(var i = 0; i < numOfEnemies; i++){
     allEnemies.push(new Enemy());
-    allEnemies[i].y =  83 + i * 83;
+
+    row = (Math.random() * 10 / 5).toFixed();
+    allEnemies[i].y =  83 + row * 83;
+
+    allEnemies[i].factor *= (Math.random() * 10).toFixed();
 }
 var player = new Player();
 
