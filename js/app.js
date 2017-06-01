@@ -27,7 +27,6 @@ Enemy.prototype.update = function(dt) {
     else {
         this.x = -100;
     }
-    // this.y = 60;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -78,12 +77,7 @@ Player.prototype.handleInput = function(keyCode) {
     else if( this.y > 415){
         this.y = 415;
     }
-    // test code
-    // console.log('x = '+ this.x + '; y = ' + this.y);
 };
-// Player.prototype.isDied = function() {
-//     return checkCollisions()? true:false;
-// }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -93,7 +87,6 @@ var numOfEnemies = 3;
 for(var i = 0; i < numOfEnemies; i++){
     allEnemies.push(new Enemy());
     allEnemies[i].y =  83 + i * 83;
-  // console.log(allEnemies[i].y);
 }
 var player = new Player();
 
@@ -104,10 +97,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down',
-        8: 'backspace'
+        40: 'down'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-// Handle collisions

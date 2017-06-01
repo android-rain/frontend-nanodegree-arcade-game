@@ -83,7 +83,10 @@ var Engine = (function(global) {
 
         if(checkCollisions() || checkPlayerWin()) {
             checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
+            // stop enemy
             updateEntities(0);
+            // 这一句取巧了，虽然可以使player到达（显示在）蓝色方格内
+            // 却有一些缺陷：游戏还能继续（没有结束）；这个解决办法不专业；
             setTimeout(reset, 1000);
         } else {
             updateEntities(dt);
@@ -105,7 +108,7 @@ var Engine = (function(global) {
     }
 
     /* This function is to detect the collisions of the enemy with player.
-     *
+     * method: check the both entities whether or not coincide.
      */
      function checkCollisions() {
        var positions = [];
@@ -120,13 +123,13 @@ var Engine = (function(global) {
             return true;
             }
        }
-       positions = [];  // could be deleted
        return false;
      }
 
      /* This function is to detect the player could be win.
       */
      function checkPlayerWin(){
+        // detect if the player is into the river
         if(player.y < 83) {
             return true;
         }
@@ -199,10 +202,11 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.x = -100;
         });
-
+        // Reset player's position
         player.x = 101 * 2;
         player.y = 83 * 4;
 
+        //Reset text displing
         rl.innerHTML = "Playing";
     }
 
