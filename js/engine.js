@@ -107,34 +107,7 @@ var Engine = (function(global) {
         player.update();
     }
 
-    /* This function is to detect the collisions of the enemy with player.
-     * method: check the both entities whether or not coincide.
-     */
-     function checkCollisions() {
-       var positions = [];
-       allEnemies.forEach(function(enemy) {
-          positions.push([enemy.x, enemy.y]);
-       });
-       var px = player.x;
-       var py = player.y;
-       for(var i = 0; i < positions.length; i++) {
-         if(Math.abs(positions[i][0] - px) < 70
-            && Math.abs(positions[i][1] - py) < 80) {
-            return true;
-            }
-       }
-       return false;
-     }
 
-     /* This function is to detect the player could be win.
-      */
-     function checkPlayerWin(){
-        // detect if the player is into the river
-        if(player.y < 83) {
-            return true;
-        }
-        return false;
-     }
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
