@@ -1,4 +1,6 @@
 var rl = document.getElementById("result");
+var isCollided = false;
+var isWon = false;
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -22,14 +24,14 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    if(this.x < this.ScreenWidth){
+    if (this.x < this.ScreenWidth) {
         this.x += dt * this.factor;
     }
     //reset the bug's position and speed after it run over out of the canvas
     else {
         this.x = -101;
         row = (Math.random() * 10 / 5).toFixed();
-        this.y =  83 + row * 83;
+        this.y = 83 + row * 83;
         this.factor = 100 * (Math.random() * 3 + 1).toFixed();
     }
 };
@@ -56,37 +58,51 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-    if(checkCollisions() || checkPlayerWin()) {
-            checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
-            this.x = 101 * 2;
-            this.y = 83 * 4;
-            //Reset text displing
-            setTimeout('rl.innerHTML = "Playing";', 1000);
-        }
+    if (!isCollided) {
+        isCollided = checkCollisions();
+    }
+    if (!isWon) {
+        isWon = checkPlayerWin();
+    }
+    check();
 };
 Player.prototype.render = function() {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 Player.prototype.handleInput = function(keyCode) {
-    switch(keyCode){
-        case 'left': this.x = this.x - this.OneStepHpixel; break;
-        case 'right': this.x = this.x + this.OneStepHpixel; break;
-        case 'up': this.y = this.y - this.OneStepVPiexl; break;
-        case 'down': this.y = this.y + this.OneStepVPiexl; break;
-        default: break;
+    if (isCollided || isWon) {
+        if (keyCode === 'enter') {
+            resetPlayer();
+        }
+    } else {
+        switch (keyCode) {
+            case 'left':
+                this.x = this.x - this.OneStepHpixel;
+                break;
+            case 'right':
+                this.x = this.x + this.OneStepHpixel;
+                break;
+            case 'up':
+                this.y = this.y - this.OneStepVPiexl;
+                break;
+            case 'down':
+                this.y = this.y + this.OneStepVPiexl;
+                break;
+            default:
+                break;
+        }
     }
     if (this.x < 0) {
         this.x = 0;
-    }
-    else if (this.x > 400) {
+    } else if (this.x > 400) {
         this.x = 400;
     }
-    if (this.y < 0){
+    if (this.y < 0) {
         this.y = 0;
-    }
-    else if( this.y > 415){
+    } else if (this.y > 415) {
         this.y = 415;
     }
+
 };
 
 // Now instantiate your objects.
@@ -94,11 +110,11 @@ Player.prototype.handleInput = function(keyCode) {
 // Place the player object in a variable called player
 var allEnemies = [];
 var numOfEnemies = 5;
-for(var i = 0; i < numOfEnemies; i++){
+for (var i = 0; i < numOfEnemies; i++) {
     allEnemies.push(new Enemy());
 
     row = (Math.random() * 10 / 5).toFixed();
-    allEnemies[i].y =  83 + row * 83;
+    allEnemies[i].y = 83 + row * 83;
 
     allEnemies[i].factor *= (Math.random() * 10).toFixed();
 }
@@ -111,37 +127,52 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-    /* This function is to detect the collisions of the enemy with player.
-     * method: check the both entities whether or not coincide.
-     */
-     function checkCollisions() {
-       var positions = [];
-       allEnemies.forEach(function(enemy) {
-          positions.push([enemy.x, enemy.y]);
-       });
-       var px = player.x;
-       var py = player.y;
-       for(var i = 0; i < positions.length; i++) {
-         if(Math.abs(positions[i][0] - px) < 70
-            && Math.abs(positions[i][1] - py) < 80) {
-            return true;
-            }
-       }
-       return false;
-     }
-
-     /* This function is to detect the player could be win.
-      */
-     function checkPlayerWin(){
-        // detect if the player is into the river
-        if(player.y < 83) {
+/* This function is to detect the collisions of the enemy with player.
+ * method: check the both entities whether or not coincide.
+ */
+function checkCollisions() {
+    var positions = [];
+    allEnemies.forEach(function(enemy) {
+        positions.push([enemy.x, enemy.y]);
+    });
+    var px = player.x;
+    var py = player.y;
+    for (var i = 0; i < positions.length; i++) {
+        if (Math.abs(positions[i][0] - px) < 70 && Math.abs(positions[i][1] - py) < 80) {
             return true;
         }
-        return false;
-     }
+    }
+    return false;
+}
+
+/* This function is to detect the player could be win.
+ */
+function checkPlayerWin() {
+    // detect if the player is into the river
+    if (player.y < 83) {
+        return true;
+    }
+    return false;
+}
+
+function check() {
+    if (isCollided || isWon) {
+        isWon ? rl.innerHTML = "You win" : rl.innerHTML = "You die";
+    }
+}
+
+function resetPlayer() {
+
+    player.x = 101 * 2;
+    player.y = 83 * 4;
+    rl.innerHTML = "Playing";
+    isWon ? isWon = false : isCollided = false;
+
+}
