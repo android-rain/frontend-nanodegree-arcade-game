@@ -1,3 +1,4 @@
+var rl = document.getElementById("result");
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -55,8 +56,13 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-    this.x = this.x;
-    this.y = this.y;
+    if(checkCollisions() || checkPlayerWin()) {
+            checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
+            this.x = 101 * 2;
+            this.y = 83 * 4;
+            //Reset text displing
+            setTimeout('rl.innerHTML = "Playing";', 1000);
+        }
 };
 Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);

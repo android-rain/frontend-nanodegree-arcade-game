@@ -21,7 +21,6 @@ var Engine = (function(global) {
      */
     var doc = global.document,
         win = global.window,
-        rl = doc.getElementById("result"),
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
@@ -80,15 +79,7 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-
-        if(checkCollisions() || checkPlayerWin()) {
-            checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
-            // 这一句取巧了，虽然可以使player到达（显示在）蓝色方格内
-            // 却有一些缺陷：游戏还能继续（没有结束）；这个解决办法不专业；
-            setTimeout(reset, 1000);
-        } else {
             updateEntities(dt);
-        }
     }
 
     /* This is called by the update function and loops through all of the
@@ -173,8 +164,7 @@ var Engine = (function(global) {
         player.x = 101 * 2;
         player.y = 83 * 4;
 
-        //Reset text displing
-        rl.innerHTML = "Playing";
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
