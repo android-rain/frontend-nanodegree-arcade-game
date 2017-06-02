@@ -70,6 +70,8 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 Player.prototype.handleInput = function(keyCode) {
+    // if collied or won, the up,right,down,left keys would not be used,and
+    // waitting for user push down the enter key
     if (isCollided || isWon) {
         if (keyCode === 'enter') {
             resetPlayer();
@@ -162,12 +164,14 @@ function checkPlayerWin() {
     return false;
 }
 
+// This function is to display web text of the game result
 function check() {
     if (isCollided || isWon) {
         isWon ? rl.innerHTML = "You win" : rl.innerHTML = "You die";
     }
 }
 
+// This function is to reset the player's position , web text and flags
 function resetPlayer() {
 
     player.x = 101 * 2;
