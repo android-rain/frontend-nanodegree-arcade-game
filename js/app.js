@@ -30,7 +30,7 @@ Enemy.prototype.update = function(dt) {
         this.x = -101;
         row = (Math.random() * 10 / 5).toFixed();
         this.y =  83 + row * 83;
-        this.factor = 70 * (Math.random() * 10 + 1).toFixed();
+        this.factor = 100 * (Math.random() * 3 + 1).toFixed();
     }
 };
 
