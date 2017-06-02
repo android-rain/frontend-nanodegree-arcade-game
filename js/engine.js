@@ -83,8 +83,6 @@ var Engine = (function(global) {
 
         if(checkCollisions() || checkPlayerWin()) {
             checkPlayerWin()? rl.innerHTML = "You win": rl.innerHTML = "You die";
-            // stop enemy
-            updateEntities(0);
             // 这一句取巧了，虽然可以使player到达（显示在）蓝色方格内
             // 却有一些缺陷：游戏还能继续（没有结束）；这个解决办法不专业；
             setTimeout(reset, 1000);
@@ -171,11 +169,7 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // Reset entities's position
-        allEnemies.forEach(function(enemy) {
-            enemy.x = -100;
-        });
-        // Reset player's position
+       // Reset player's position
         player.x = 101 * 2;
         player.y = 83 * 4;
 
